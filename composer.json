@@ -1,0 +1,28 @@
+{
+	"name": "hypejunction/hypeshortcode",
+	"type": "elgg-plugin",
+	"description": "Shortcode support",
+	"homepage": "http://hypejunction.com",
+	"keywords": [
+		"elgg", "plugin", "embed", "shortcode"
+	],
+	"license": "GPL-2.0-only",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "info@hypejunction.com"
+		}
+	],
+	"extra": {
+		"installer-name": "hypeShortcode"
+	},
+	"require": {
+		"php": ">=7.0",
+		"composer/installers": "~1.0"
+	},
+	"autoload": {
+		"psr-0": {
+			"": "classes/"
+		}
+	}
+}
