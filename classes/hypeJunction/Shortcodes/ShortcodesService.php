@@ -57,16 +57,9 @@ class ShortcodesService {
 	 */
 	public function expand($text, $parse_urls = true, $sanitize = true, $autop = true) {
 
+		$text = $this->replaceLegacyCodes($text);
+
 		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
-
-		$shortcodes = implode('|', $this->shortcodes);
-
-		if ($parse_urls) {
-			// parse urls excluding shortcode tags
-			$callback = [$this, 'parseUrlCallback'];
-			$regex = "/<a[^>]*?>.*?<\/a>|<.*?>|\[$shortcodes.*?\]|(^|\s|\!|\.|\?|>|\G)+(h?[t|f]??tps*:\/\/[^\s\r\n\t<>\"\'\)\(]+)/i";
-			$text = preg_replace_callback($regex, $callback, $text);
-		}
 
 		if ($sanitize) {
 			$text = filter_tags($text);
@@ -75,6 +68,8 @@ class ShortcodesService {
 		if ($autop) {
 			$text = elgg_autop($text);
 		}
+
+		$shortcodes = implode('|', $this->shortcodes);
 
 		$text = preg_replace_callback("/\[({$shortcodes})(.*?)\]/", function ($matches) {
 
@@ -104,6 +99,73 @@ class ShortcodesService {
 
 			return htmlspecialchars($output, ENT_QUOTES, 'UTF-8');
 		}, $text);
+
+		if ($parse_urls) {
+			$text = parse_urls($text);
+			$text = elgg_parse_emails($text);
+		}
+
+		return $text;
+	}
+
+	/**
+	 * Update some legacy values
+	 *
+	 * @param string $text Text
+	 *
+	 * @return null|string|string[]
+	 */
+	protected function replaceLegacyCodes($text) {
+
+		$image_callback = function($matches) {
+			$hash = $matches[1];
+			$ext = $matches[2];
+			if (!$hash || !$ext) {
+				return $matches[0];
+			}
+
+			$files = elgg_get_entities([
+				'types' => 'object',
+				'subtypes' => 'embed_file',
+				'limit' => 1,
+				'metadata_name_value_pairs' => [
+					'hash' => $hash,
+				],
+			]);
+
+			if (!$files) {
+				return $matches[0];
+			}
+
+			$file = array_shift($files);
+
+			$url = elgg_get_embed_url($file, 'large');
+			if (!$url) {
+				return $matches[0];
+			}
+
+			return str_replace(elgg_get_site_url(), '', $url);
+		};
+
+		$asset_callback = function($matches) {
+			if ($matches[1]) {
+				return "embed/asset/{$matches[1]}";
+			}
+			return $matches[0];
+		};
+
+		$linkembed_callback = function($matches) {
+			if ($matches[1]) {
+				return elgg()->shortcodes->generate('player', [
+					'url' => $matches[1],
+				]);
+			}
+			return $matches[0];
+		};
+
+		$text = preg_replace_callback('/ckeditor\/image\/\d+\/(.*?)\/(\w+)/i', $image_callback, $text);
+		$text = preg_replace_callback('/ckeditor\/assets\/((\w+\/?)*)/i', $asset_callback, $text);
+		$text = preg_replace_callback('/<a.*?href=\"(.*?)\".*?><img.*?alt=\"linkembed\".*?><\/a>/i', $linkembed_callback, $text);
 
 		return $text;
 	}
