@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/hypeJunctionPro/Elgg3-hypeShortcode/compare/1.1.0...1.1.1) (2018-04-29)
+
+
+### Bug Fixes
+
+* **shortcode:** do not encode expanded html ([1ea53d6](https://github.com/hypeJunctionPro/Elgg3-hypeShortcode/commit/1ea53d6))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/hypeJunctionPro/Elgg3-hypeShortcode/compare/1.0.0...1.1.0) (2018-04-25)
 
