@@ -57,9 +57,9 @@ class ShortcodesService {
 	 */
 	public function expand($text, $parse_urls = true, $sanitize = true, $autop = true) {
 
-		$text = $this->replaceLegacyCodes($text);
-
 		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+
+		$text = $this->replaceLegacyCodes($text);
 
 		if ($sanitize) {
 			$text = filter_tags($text);
@@ -97,7 +97,7 @@ class ShortcodesService {
 
 			$output = elgg_view("shortcodes/$shortcode", $attributes);
 
-			return htmlspecialchars($output, ENT_QUOTES, 'UTF-8');
+			return $output;
 		}, $text);
 
 		if ($parse_urls) {
