@@ -10,3 +10,4 @@ robots.txt
 /releases/
 composer.lock
 Gemfile.lock
+/vendor/
