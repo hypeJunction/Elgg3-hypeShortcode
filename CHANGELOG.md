@@ -1,3 +1,8 @@
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/hypeJunctionPro/Elgg3-hypeShortcode/compare/1.1.1...1.1.2) (2018-05-08)
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/hypeJunctionPro/Elgg3-hypeShortcode/compare/1.1.0...1.1.1) (2018-04-29)
 
