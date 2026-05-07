@@ -2,6 +2,9 @@
 
 namespace hypeJunction\Shortcodes;
 
+/**
+ * Registers, generates, expands, extracts, and strips shortcode tags in text.
+ */
 class ShortcodesService {
 
 	/**
@@ -48,10 +51,10 @@ class ShortcodesService {
 	/**
 	 * Expand shortcodes
 	 *
-	 * @param string $text     Text
-	 *                         * @param bool $parse_urls Parse and linkify URLs
-	 * @param bool   $sanitize Sanitize the text
-	 * @param bool   $autop    Add paragraphs
+	 * @param string $text       Text
+	 * @param bool   $parse_urls Parse and linkify URLs
+	 * @param bool   $sanitize   Sanitize the text
+	 * @param bool   $autop      Add paragraphs
 	 *
 	 * @return string
 	 */
@@ -91,6 +94,7 @@ class ShortcodesService {
 					$value = substr($value, 2);
 					$value = base64_decode($value);
 				}
+
 				$value = htmlspecialchars_decode($value, ENT_QUOTES);
 				$attributes[$key] = $value;
 			}
@@ -151,6 +155,7 @@ class ShortcodesService {
 			if ($matches[1]) {
 				return "embed/asset/{$matches[1]}";
 			}
+
 			return $matches[0];
 		};
 
@@ -160,6 +165,7 @@ class ShortcodesService {
 					'url' => $matches[1],
 				]);
 			}
+
 			return $matches[0];
 		};
 
@@ -200,6 +206,7 @@ class ShortcodesService {
 					$value = substr($value, 2);
 					$value = base64_decode($value);
 				}
+
 				$value = htmlspecialchars_decode($value, ENT_QUOTES);
 				$attributes[$key] = $value;
 			}
@@ -245,8 +252,8 @@ class ShortcodesService {
 		$text = $matches[2];
 
 		return $matches[1] . elgg_format_element('a', [
-				'href' => $matches[2],
-				'rel' => 'nofollow',
-			], $text);
+			'href' => $matches[2],
+			'rel' => 'nofollow',
+		], $text);
 	}
 }

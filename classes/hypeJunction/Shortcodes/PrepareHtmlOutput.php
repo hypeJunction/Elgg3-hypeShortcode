@@ -1,12 +1,12 @@
 <?php
-/**
- *
- */
 
 namespace hypeJunction\Shortcodes;
 
 use Elgg\Hook;
 
+/**
+ * Hook handler that expands shortcodes in prepared HTML output.
+ */
 class PrepareHtmlOutput {
 
 	/**

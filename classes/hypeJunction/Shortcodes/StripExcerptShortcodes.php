@@ -4,6 +4,9 @@ namespace hypeJunction\Shortcodes;
 
 use Elgg\Hook;
 
+/**
+ * Hook handler that strips shortcode tags from excerpt output.
+ */
 class StripExcerptShortcodes {
 
 	/**
