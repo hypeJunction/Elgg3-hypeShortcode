@@ -2,7 +2,7 @@
 
 namespace hypeJunction\Shortcodes;
 
-use Elgg\Hook;
+use Elgg\Event;
 
 /**
  * Hook handler that expands shortcodes in prepared HTML output.
@@ -12,13 +12,13 @@ class PrepareHtmlOutput {
 	/**
 	 * Expand shortcodes
 	 *
-	 * @param Hook $hook Hook
+	 * @param Event $event Event
 	 *
 	 * @return array
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(Event $event) {
 
-		$value = $hook->getValue();
+		$value = $event->getValue();
 
 		$html = elgg_extract('html', $value, '');
 		$options = elgg_extract('options', $value, []);

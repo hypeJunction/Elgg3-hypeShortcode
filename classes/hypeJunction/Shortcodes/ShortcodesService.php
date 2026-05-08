@@ -43,7 +43,7 @@ class ShortcodesService {
 			unset($attrs['url']);
 		}
 
-		$attributes = elgg_format_attributes(array_filter($attrs));
+		$attributes = elgg()->html_formatter->formatAttributes(array_filter($attrs));
 
 		return "[$shortcode $attributes]";
 	}
@@ -65,7 +65,7 @@ class ShortcodesService {
 		$text = $this->replaceLegacyCodes($text);
 
 		if ($sanitize) {
-			$text = filter_tags($text);
+			$text = elgg()->html_formatter->stripTags($text);
 		}
 
 		if ($autop) {
@@ -88,8 +88,8 @@ class ShortcodesService {
 
 			$attributes = [];
 			for ($i = 0; $i < count($attribute_matches[0]); $i++) {
-				$key = filter_tags($attribute_matches[2][$i]);
-				$value = filter_tags($attribute_matches[4][$i]);
+				$key = strip_tags($attribute_matches[2][$i]);
+				$value = strip_tags($attribute_matches[4][$i]);
 				if (strpos($value, 'x_') === 0) {
 					$value = substr($value, 2);
 					$value = base64_decode($value);
@@ -105,8 +105,8 @@ class ShortcodesService {
 		}, $text);
 
 		if ($parse_urls) {
-			$text = parse_urls($text);
-			$text = elgg_parse_emails($text);
+			$text = elgg()->html_formatter->parseUrls($text);
+			$text = elgg()->html_formatter->parseEmails($text);
 		}
 
 		return $text;
@@ -199,9 +199,9 @@ class ShortcodesService {
 			preg_match_all('/(\s+)([a-z0-9]+)(\=\"(.*?)\")?/', $matches[2][$i], $attribute_matches);
 
 			$attributes = [];
-			for ($i = 0; $i < count($attribute_matches[0]); $i++) {
-				$key = filter_tags($attribute_matches[2][$i]);
-				$value = filter_tags($attribute_matches[4][$i]);
+			for ($j = 0; $j < count($attribute_matches[0]); $j++) {
+				$key = strip_tags($attribute_matches[2][$j]);
+				$value = strip_tags($attribute_matches[4][$j]);
 				if (strpos($value, 'x_') === 0) {
 					$value = substr($value, 2);
 					$value = base64_decode($value);

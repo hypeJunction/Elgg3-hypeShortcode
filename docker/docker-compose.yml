@@ -1,21 +1,4 @@
-# Per-plugin test stack for Elgg 3.x.
-#
-# This file lives at <plugin>/docker/docker-compose.yml inside the plugin
-# repository. Each plugin gets its own copy, with its own volumes and
-# network — isolation is total.
-#
-# The `name` field below scopes the compose project to this plugin, so
-# two plugins on the same host cannot collide on volume or network names.
-# PLUGIN_ID must be set in docker/.env before starting the stack.
-#
-# Run all commands from <plugin>/ (the parent of this directory):
-#
-#   docker compose -f docker/docker-compose.yml up -d
-#   docker compose -f docker/docker-compose.yml exec elgg bash
-#   docker compose -f docker/docker-compose.yml --profile test run --rm node \
-#     sh -c "cd /plugin/tests/playwright && npm ci && npx playwright test"
-
-name: ${PLUGIN_ID:?set PLUGIN_ID in docker/.env}-elgg3
+name: ${PLUGIN_ID:?set PLUGIN_ID in docker/.env}-elgg5
 
 services:
   elgg:
@@ -24,8 +7,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - elgg-data:/var/www/data
-      # Plugin source is mounted read-write so composer install and test
-      # artifacts written inside the container land back in the repo.
       - ..:/var/www/html/mod/${PLUGIN_ID}
     environment:
       PLUGIN_ID: ${PLUGIN_ID}
@@ -33,20 +14,27 @@ services:
       ELGG_DB_NAME: elgg
       ELGG_DB_USER: elgg
       ELGG_DB_PASS: elgg
-      ELGG_SITE_URL: "http://localhost:${ELGG_PORT:-9588}/"
+      ELGG_SITE_URL: "http://elgg/"
       ELGG_DATA_ROOT: "/var/www/data/"
       ELGG_DB_PREFIX: "elgg_"
       ELGG_ADMIN_EMAIL: "admin@example.com"
       ELGG_ADMIN_PASSWORD: "admin12345"
     ports:
-      - "${ELGG_PORT:-9588}:80"
+      - "${ELGG_PORT:-9590}:80"
     depends_on:
       db:
         condition: service_healthy
     entrypoint: /usr/local/bin/elgg-install.sh
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /var/www/html/.elgg-installed && curl -sf -H 'Host: elgg' http://localhost/ > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 90s
 
   db:
-    image: mysql:5.7
+    image: mysql:8.0
+    command: --innodb-use-native-aio=0
     environment:
       MYSQL_DATABASE: elgg
       MYSQL_USER: elgg
@@ -60,10 +48,10 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     ports:
-      - "${DB_PORT:-10588}:3306"
+      - "${DB_PORT:-10590}:3306"
 
   node:
-    image: mcr.microsoft.com/playwright:v1.49.0-noble
+    image: mcr.microsoft.com/playwright:v1.59.1-noble
     volumes:
       - ..:/plugin
     working_dir: /plugin
@@ -77,7 +65,8 @@ services:
       ELGG_DB_PASS: elgg
       ELGG_DB_NAME: elgg
     depends_on:
-      - elgg
+      elgg:
+        condition: service_healthy
     profiles:
       - test
 

@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'shortcodes' => \DI\object(\hypeJunction\Shortcodes\ShortcodesService::class),
+	'shortcodes' => \DI\create(\hypeJunction\Shortcodes\ShortcodesService::class),
 ];
