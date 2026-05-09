@@ -15,7 +15,7 @@ echo "MySQL is ready."
 cd /var/www/html
 
 if [ ! -f /var/www/html/.elgg-installed ]; then
-    echo "Installing Elgg 5.x..."
+    echo "Installing Elgg 6.x..."
 
     mkdir -p elgg-config
     cat > elgg-config/settings.php <<'SETTINGS_TEMPLATE'
@@ -49,7 +49,7 @@ SETTINGS_VALUES
             'dbhost' => '${ELGG_DB_HOST:-db}',
             'dbport' => '3306',
             'dbprefix' => 'elgg_',
-            'sitename' => 'Elgg 5.x Plugin Test',
+            'sitename' => 'Elgg 6.x Plugin Test',
             'siteemail' => '${ELGG_ADMIN_EMAIL:-admin@example.com}',
             'wwwroot' => '${ELGG_SITE_URL:-http://elgg/}',
             'dataroot' => '${ELGG_DATA_ROOT:-/var/www/data/}',
@@ -60,7 +60,7 @@ SETTINGS_VALUES
         ];
         \$installer = new \ElggInstaller();
         \$installer->batchInstall(\$params);
-        echo 'Elgg 5.x installed successfully.' . PHP_EOL;
+        echo 'Elgg 6.x installed successfully.' . PHP_EOL;
     " 2>&1 || echo "Install completed (check for errors above)."
 
     echo "Activating plugins..."
@@ -96,7 +96,7 @@ SETTINGS_VALUES
     chmod -R u+rwX,g+rX,o+rX "${ELGG_DATA_ROOT:-/var/www/data/}"
 
     touch /var/www/html/.elgg-installed
-    echo "Elgg 5.x setup complete."
+    echo "Elgg 6.x setup complete."
 fi
 
 # Fix ownership every start — PHP scripts running as root during install/debug
