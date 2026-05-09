@@ -9,10 +9,10 @@
 
     <description>Shortcode support</description>
 
-    <author>Ismayil Khayredinov (info@hypejunction.com)</author>
-    <website>http://hypeJunction.com</website>
-    <copyright>2018 (c) Ismayil Khayredinov</copyright>
-    <license>https://hypejunction.com/license</license>
+    <author>hypeJunction</author>
+    <website>https://github.com/hypeJunction/hypeshortcode</website>
+    <copyright>(c) hypeJunction</copyright>
+    <license>proprietary</license>
 
     <requires>
         <type>elgg_release</type>

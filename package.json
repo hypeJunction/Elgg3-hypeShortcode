@@ -1,12 +1,12 @@
 {
 	"name": "hypeShortcode",
 	"version": "1.2.0",
-	"license": "SEE LICENSE IN https://hypejunction.com/license",
+	"license": "proprietary",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:hypeJunctionPro/Elgg3-hypeShortcode.git",
-		"owner": "hypeJunctionPro",
-		"repo": "Elgg3-hypeShortcode"
+		"url": "git@github.com:hypeJunction/hypeshortcode.git",
+		"owner": "hypeJunction",
+		"repo": "hypeshortcode"
 	},
 	"dependencies": {
 		"curlrequest": "^1.0.1",
