@@ -1,7 +1,7 @@
 hypeShortcode
 =============
 
-![Elgg 5.x](https://img.shields.io/badge/Elgg-5.x-orange.svg?style=flat-square)
+![Elgg 7.x](https://img.shields.io/badge/Elgg-7.x-orange.svg?style=flat-square)
 
 Add support for custom BB-style shortcodes
 
@@ -35,3 +35,9 @@ elgg()->shortcodes->expand($text);
 ```php
 elgg()->shortcodes->strip($text);
 ```
+
+## Compatibility
+
+| Plugin version | Elgg version |
+|---|---|
+| current | 7.x |
