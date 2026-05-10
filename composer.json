@@ -2,7 +2,7 @@
     "name": "hypejunction/hypeshortcode",
     "type": "elgg-plugin",
     "description": "Shortcode support",
-    "homepage": "https://github.com/hypeJunction/hypeshortcode",
+    "homepage": "https://github.com/hypeJunction/Elgg3-hypeShortcode",
     "keywords": [
         "elgg",
         "plugin",
@@ -12,11 +12,12 @@
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "hypeJunction"
+            "name": "Ismayil Khayredinov",
+            "email": "ismayil.khayredinov@gmail.com"
         }
     ],
     "extra": {
-        "installer-name": "hypeShortcode"
+        "installer-name": "hypeshortcode"
     },
     "require": {
         "php": ">=8.3",
@@ -28,5 +29,6 @@
         "psr-0": {
             "": "classes/"
         }
-    }
+    },
+    "version": "1.2.0"
 }
