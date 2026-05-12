@@ -6,7 +6,10 @@ use Elgg\DefaultPluginBootstrap;
 
 class Bootstrap extends DefaultPluginBootstrap {
 
-	public function init(): void {
+	/**
+     * @return void
+     */
+    public function init(): void {
 		elgg_extend_view('elgg.css', 'shortcodes.css');
 	}
 }

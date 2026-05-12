@@ -6,7 +6,10 @@ use Elgg\IntegrationTestCase;
 
 class HookHandlersTest extends IntegrationTestCase {
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'hypeshortcode';
 	}
 
