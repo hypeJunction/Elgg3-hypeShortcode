@@ -19,19 +19,19 @@ class HookHandlersTest extends IntegrationTestCase {
 	// --- handler registration ---
 
 	public function testPrepareHtmlHandlerRegistered() {
-		$handlers = _elgg_services()->events->getAllHandlers();
+		$handlers = \_elgg_services()->events->getAllHandlers();
 		$this->assertArrayHasKey('prepare', $handlers);
 		$this->assertArrayHasKey('html', $handlers['prepare']);
 	}
 
 	public function testStripPlaintextHandlerRegistered() {
-		$handlers = _elgg_services()->events->getAllHandlers();
+		$handlers = \_elgg_services()->events->getAllHandlers();
 		$this->assertArrayHasKey('view_vars', $handlers);
 		$this->assertArrayHasKey('output/plaintext', $handlers['view_vars']);
 	}
 
 	public function testStripExcerptHandlerRegistered() {
-		$handlers = _elgg_services()->events->getAllHandlers();
+		$handlers = \_elgg_services()->events->getAllHandlers();
 		$this->assertArrayHasKey('view_vars', $handlers);
 		$this->assertArrayHasKey('output/excerpt', $handlers['view_vars']);
 	}
@@ -39,7 +39,7 @@ class HookHandlersTest extends IntegrationTestCase {
 	// --- handler behavior ---
 
 	public function testPrepareHtmlStripsShortcodesWhenOptionSet() {
-		$result = elgg_trigger_event_results('prepare', 'html', [], [
+		$result = \elgg_trigger_event_results('prepare', 'html', [], [
 			'html' => '[testsc key="value"] Hello world',
 			'options' => [
 				'strip_shortcodes' => true,
@@ -54,7 +54,7 @@ class HookHandlersTest extends IntegrationTestCase {
 	}
 
 	public function testPrepareHtmlPassesThroughCleanText() {
-		$result = elgg_trigger_event_results('prepare', 'html', [], [
+		$result = \elgg_trigger_event_results('prepare', 'html', [], [
 			'html' => 'Plain text without shortcodes',
 			'options' => [
 				'sanitize' => false,
@@ -67,7 +67,7 @@ class HookHandlersTest extends IntegrationTestCase {
 	}
 
 	public function testStripPlaintextStripsShortcodes() {
-		$result = elgg_trigger_event_results('view_vars', 'output/plaintext', [], [
+		$result = \elgg_trigger_event_results('view_vars', 'output/plaintext', [], [
 			'value' => '[testsc key="value"] plain text content',
 			'text' => '',
 		]);
@@ -77,7 +77,7 @@ class HookHandlersTest extends IntegrationTestCase {
 	}
 
 	public function testStripExcerptStripsShortcodes() {
-		$result = elgg_trigger_event_results('view_vars', 'output/excerpt', [], [
+		$result = \elgg_trigger_event_results('view_vars', 'output/excerpt', [], [
 			'text' => '[testsc key="value"] excerpt content here',
 		]);
 		$this->assertIsArray($result);

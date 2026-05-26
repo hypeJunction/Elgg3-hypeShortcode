@@ -19,7 +19,7 @@ class StripPlaintextShortcodes {
 
 		$vars = $event->getValue();
 
-		$value = elgg_extract('value', $vars, '');
+		$value = \elgg_extract('value', $vars, '');
 
 		$value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
 

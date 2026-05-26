@@ -39,7 +39,7 @@ class ShortcodesService {
 			}
 		}
 
-		if (isset($attrs['url']) && $attrs['url'] == elgg_get_site_url()) {
+		if (isset($attrs['url']) && $attrs['url'] == \elgg_get_site_url()) {
 			unset($attrs['url']);
 		}
 
@@ -69,7 +69,7 @@ class ShortcodesService {
 		}
 
 		if ($autop) {
-			$text = elgg_autop($text);
+			$text = \elgg_autop($text);
 		}
 
 		$shortcodes = implode('|', $this->shortcodes);
@@ -80,7 +80,7 @@ class ShortcodesService {
 
 			$shortcode = $matches[1];
 
-			if (!elgg_view_exists("shortcodes/$shortcode")) {
+			if (!\elgg_view_exists("shortcodes/$shortcode")) {
 				return $full;
 			}
 
@@ -99,7 +99,7 @@ class ShortcodesService {
 				$attributes[$key] = $value;
 			}
 
-			$output = elgg_view("shortcodes/$shortcode", $attributes);
+			$output = \elgg_view("shortcodes/$shortcode", $attributes);
 
 			return $output;
 		}, $text);
@@ -128,7 +128,7 @@ class ShortcodesService {
 				return $matches[0];
 			}
 
-			$files = elgg_get_entities([
+			$files = \elgg_get_entities([
 				'types' => 'object',
 				'subtypes' => 'embed_file',
 				'limit' => 1,
@@ -143,12 +143,12 @@ class ShortcodesService {
 
 			$file = array_shift($files);
 
-			$url = elgg_get_embed_url($file, 'large');
+			$url = \elgg_get_embed_url($file, 'large');
 			if (!$url) {
 				return $matches[0];
 			}
 
-			return str_replace(elgg_get_site_url(), '', $url);
+			return str_replace(\elgg_get_site_url(), '', $url);
 		};
 
 		$asset_callback = function($matches) {
@@ -251,7 +251,7 @@ class ShortcodesService {
 
 		$text = $matches[2];
 
-		return $matches[1] . elgg_format_element('a', [
+		return $matches[1] . \elgg_format_element('a', [
 			'href' => $matches[2],
 			'rel' => 'nofollow',
 		], $text);
