@@ -85,7 +85,7 @@ class ShortcodesServiceTest extends IntegrationTestCase {
 	}
 
 	public function testGenerateOmitsUrlWhenMatchesSiteUrl() {
-		$siteUrl = elgg_get_site_url();
+		$siteUrl = \elgg_get_site_url();
 		$result = $this->svc->generate('test', ['url' => $siteUrl, 'key' => 'val']);
 		$this->assertStringNotContainsString('url=', $result);
 	}

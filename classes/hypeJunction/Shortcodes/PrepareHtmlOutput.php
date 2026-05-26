@@ -20,23 +20,23 @@ class PrepareHtmlOutput {
 
 		$value = $event->getValue();
 
-		$html = elgg_extract('html', $value, '');
-		$options = elgg_extract('options', $value, []);
+		$html = \elgg_extract('html', $value, '');
+		$options = \elgg_extract('options', $value, []);
 
 		$svc = elgg()->shortcodes;
 		/* @var $svc ShortcodesService */
 
-		$parse_urls = elgg_extract('parse_urls', $options, true);
+		$parse_urls = \elgg_extract('parse_urls', $options, true);
 		$options['parse_urls'] = false;
 		$options['parse_emails'] = false;
 
-		$sanitize = elgg_extract('sanitize', $options, true);
+		$sanitize = \elgg_extract('sanitize', $options, true);
 		$options['sanitize'] = false;
 
-		$autop = elgg_extract('autop', $options, true);
+		$autop = \elgg_extract('autop', $options, true);
 		$options['autop'] = false;
 
-		$strip_shortcodes = elgg_extract('strip_shortcodes', $options, false);
+		$strip_shortcodes = \elgg_extract('strip_shortcodes', $options, false);
 		if ($strip_shortcodes) {
 			$html = $svc->strip($html);
 		}
