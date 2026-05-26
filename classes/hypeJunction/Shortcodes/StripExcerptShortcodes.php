@@ -19,7 +19,7 @@ class StripExcerptShortcodes {
 
 		$vars = $event->getValue();
 
-		$text = elgg_extract('text', $vars, '');
+		$text = \elgg_extract('text', $vars, '');
 
 		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 
